@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include("../partials/_head") %>
+</head>
+<body>
+
+    <%- include("../partials/_navbar") %>
+
+    <div class="container mt-5" style="max-width: 500px;">
+
+        <div class="card shadow">
+            <div class="card-body">
+
+                <h2 class="text-center mb-4">Register</h2>
+
+                <% if (error.length > 0) { %>
+                    <div class="alert alert-danger">
+                        <ul class="mb-0">
+                            <% error.forEach(err => { %>
+                                <li><%= err %></li>
+                            <% }) %>
+                        </ul>
+                    </div>
+                <% } %>
+
+                <form action="/register" method="POST">
+
+                    <div class="mb-3">
+                        <label for="name" class="form-label">
+                            Full Name
+                        </label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="name"
+                            name="name"
+                            required
+                        >
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">
+                            Email
+                        </label>
+                        <input
+                            type="email"
+                            class="form-control"
+                            id="email"
+                            name="email"
+                            required
+                        >
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">
+                            Password
+                        </label>
+                        <input
+                            type="password"
+                            class="form-control"
+                            id="password"
+                            name="password"
+                            minlength="8"
+                            required
+                        >
+                        <small class="text-muted">
+                            Minimum 8 characters.
+                        </small>
+                    </div>
+
+                    <button type="submit" class="btn btn-success w-100">
+                        Register
+                    </button>
+
+                </form>
+
+                <hr>
+
+                <p class="text-center mb-0">
+                    Already have an account?
+                    <a href="/login">Login here</a>
+                </p>
+
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

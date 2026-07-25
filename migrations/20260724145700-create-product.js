@@ -10,22 +10,40 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       price: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
       stock: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
       imageUrl: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       CategoryId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references:{
+          model: 'Categories',
+          key: 'id'
+         },
+         onUpdate: 'cascade',
+         onDelete: 'cascade'
       },
       SupplierId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references:{
+          model: 'Suppliers',
+          key: 'id'
+         },
+         onUpdate: 'cascade',
+         onDelete: 'cascade'
       },
       createdAt: {
         allowNull: false,

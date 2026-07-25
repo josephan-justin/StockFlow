@@ -1,7 +1,7 @@
 class Controller{
-    static async home(req, res){
+    static async dashboard(req, res){
         try {
-            
+            res.render('dashboard')
         } catch (error) {
             console.log(error)
             res.send(error)

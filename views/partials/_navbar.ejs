@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+
+        <a class="navbar-brand" href="/">
+            StockFlow
+        </a>
+
+        <div class="ms-auto">
+
+            <% if (!userId) { %>
+
+                <a href="/login" class="btn btn-outline-light me-2">
+                    Login
+                </a>
+
+                <a href="/register" class="btn btn-warning">
+                    Register
+                </a>
+
+            <% } else { %>
+
+                <a href="/dashboard" class="btn btn-outline-light me-2">
+                    Dashboard
+                </a>
+
+                <a href="/logout" class="btn btn-danger">
+                    Logout
+                </a>
+
+            <% } %>
+
+        </div>
+
+    </div>
+</nav>
