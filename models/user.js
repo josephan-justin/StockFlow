@@ -6,6 +6,7 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
+    
     checkPassword(password){
       return bcrypt.compareSync(password, this.password)
     }
