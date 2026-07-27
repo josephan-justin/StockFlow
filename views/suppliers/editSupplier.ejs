@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include("../partials/_head") %>
+</head>
+<body>
+
+    <%- include("../partials/_navbar") %>
+
+    <div class="container mt-5">
+
+        <h2 class="mb-4">Edit Supplier</h2>
+
+        <% if(typeof errors !== "undefined"){ %>
+
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    <% errors.forEach(error => { %>
+                        <li><%= error %></li>
+                    <% }) %>
+                </ul>
+            </div>
+
+        <% } %>
+
+        <form action="/suppliers/<%= supplier.id %>/edit" method="POST">
+
+            <div class="mb-3">
+                <label class="form-label">Supplier Name</label>
+                <input
+                    type="text"
+                    name="name"
+                    class="form-control"
+                    value="<%= supplier.name %>"
+                    required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Phone</label>
+                <input
+                    type="tel"
+                    name="phone"
+                    class="form-control"
+                    value="<%= supplier.phone %>"
+                    required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input
+                    type="email"
+                    name="email"
+                    class="form-control"
+                    value="<%= supplier.email %>"
+                    required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Address</label>
+                <textarea
+                    name="address"
+                    class="form-control"
+                    rows="3"
+                    required><%= supplier.address %></textarea>
+            </div>
+
+            <button class="btn btn-primary">
+                Update
+            </button>
+
+            <a href="/suppliers" class="btn btn-secondary">
+                Back
+            </a>
+
+        </form>
+
+    </div>
+
+</body>
+</html>

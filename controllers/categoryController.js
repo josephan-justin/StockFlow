@@ -34,7 +34,7 @@ class Controller{
 
             if (error.name === "SequelizeValidationError") {
             const errors = error.errors.map(el => el.message)
-            return res.render("addCategory", { errors })
+            return res.render("categories/addCategory", { errors })
             }
 
             console.log(error)
@@ -76,7 +76,7 @@ class Controller{
             const category = await Category.findByPk(req.params.id)
             const errors = error.errors.map(el => el.message)
 
-            return res.render("editCategory", {
+            return res.render("categories/editCategory", {
                 category,
                 errors
             })

@@ -15,10 +15,54 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Supplier.init({
-    name: DataTypes.STRING,
-    phone: DataTypes.STRING,
-    email: DataTypes.STRING,
-    address: DataTypes.STRING
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate:{
+        notNull: {
+          msg: 'Name Required!'
+        },
+        notEmpty:{
+          msg: 'Name Required!'
+        }
+      }
+    },
+    phone: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate:{
+        notNull: {
+          msg: 'Phone Number Required!'
+        },
+        notEmpty:{
+          msg: 'Phone Number Required!'
+        }
+      }
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate:{
+        notNull: {
+          msg: 'Email Required!'
+        },
+        notEmpty:{
+          msg: 'Email Required!'
+        }
+      }
+    },
+    address: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate:{
+        notNull: {
+          msg: 'Address Required!'
+        },
+        notEmpty:{
+          msg: 'Address Required!'
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'Supplier',
