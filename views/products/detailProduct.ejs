@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include("../partials/_head") %>
+</head>
+<body>
+    <%- include("../partials/_navbar") %>
+
+    <div class="container mt-5">
+
+        <div class="card shadow">
+
+            <img
+                src="<%= product.imageUrl %>"
+                class="card-img-top"
+                style="height:300px; object-fit:cover;">
+
+            <div class="card-body">
+
+                <h2><%= product.name %></h2>
+
+                <hr>
+
+                <p><strong>Category :</strong> <%= product.Category.name %></p>
+
+                <p><strong>Supplier :</strong> <%= product.Supplier.name %></p>
+
+                <p><strong>Unit Price :</strong> Rp <%= product.price %></p>
+
+                <p><strong>Stock :</strong> <%= product.stock %></p>
+
+                <a href="/products" class="btn btn-secondary">
+                    Back
+                </a>
+
+                <a href="/products/<%= product.id %>/edit"
+                class="btn btn-warning">
+                    Edit
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>    
+</body>
+</html>
