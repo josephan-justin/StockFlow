@@ -1,15 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <%- include("partials/_head") %>
 </head>
 <body>
-    <h1>Dashboard</h1>
 
-    <p>WELOCOME TO STOCKFLOW</p>
+    <%- include("partials/_navbar") %>
 
-    <a href="/logout">Logout</a>
+    <div class="container mt-5">
+
+        <h2>Welcome, <%= user.name %>!</h2>
+        <p class="text-muted">
+            Role: <strong><%= user.role %></strong>
+        </p>
+
+        <hr>
+
+        <div class="row">
+
+            <div class="col-md-3 mb-3">
+                <div class="card shadow text-center">
+                    <div class="card-body">
+                        <h5>Total Products</h5>
+                        <h2><%= totalProducts %></h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <div class="card shadow text-center">
+                    <div class="card-body">
+                        <h5>Total Categories</h5>
+                        <h2><%= totalCategories %></h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <div class="card shadow text-center">
+                    <div class="card-body">
+                        <h5>Total Suppliers</h5>
+                        <h2><%= totalSuppliers %></h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <div class="card shadow text-center">
+                    <div class="card-body">
+                        <h5>Total Transactions</h5>
+                        <h2><%= totalTransactions %></h2>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <hr>
+
+        <h4 class="mb-3">Quick Menu</h4>
+
+        <div class="row">
+
+            <div class="col-md-3 mb-3">
+                <a href="/products" class="btn btn-outline-primary w-100">
+                    Products
+                </a>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <a href="/categories" class="btn btn-outline-success w-100">
+                    Categories
+                </a>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <a href="/suppliers" class="btn btn-outline-warning w-100">
+                    Suppliers
+                </a>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <a href="/transactions" class="btn btn-outline-danger w-100">
+                    Transactions
+                </a>
+            </div>
+
+        </div>
+
+        <% if (user.role === "admin") { %>
+
+            <hr>
+
+            <h4>Administration</h4>
+
+            <a href="/users" class="btn btn-dark">
+                User Management
+            </a>
+
+        <% } %>
+
+    </div>
+
 </body>
 </html>
+
