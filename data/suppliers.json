@@ -1,0 +1,50 @@
+[
+  {
+    "name": "PT Sumber Makmur",
+    "phone": "021-55667788",
+    "email": "sales@sumbermakmur.co.id",
+    "address": "Jl. Raya Bekasi No. 120, Bekasi"
+  },
+  {
+    "name": "CV Jaya Abadi",
+    "phone": "021-77889900",
+    "email": "info@jayaabadi.co.id",
+    "address": "Jl. Ahmad Yani No. 45, Jakarta Timur"
+  },
+  {
+    "name": "PT Nusantara Teknologi",
+    "phone": "021-88997766",
+    "email": "support@nusantaratek.co.id",
+    "address": "Jl. Gatot Subroto No. 15, Jakarta Selatan"
+  },
+  {
+    "name": "PT Global Office",
+    "phone": "021-66778899",
+    "email": "sales@globaloffice.co.id",
+    "address": "Jl. Sudirman No. 88, Jakarta Pusat"
+  },
+  {
+    "name": "PT Sinar Elektronik",
+    "phone": "021-44556677",
+    "email": "marketing@sinarelektronik.co.id",
+    "address": "Jl. Diponegoro No. 30, Bandung"
+  },
+  {
+    "name": "CV Mitra Bersama",
+    "phone": "022-33445566",
+    "email": "admin@mitrabersama.co.id",
+    "address": "Jl. Asia Afrika No. 22, Bandung"
+  },
+  {
+    "name": "PT Prima Supply",
+    "phone": "031-77881122",
+    "email": "contact@primasupply.co.id",
+    "address": "Jl. Basuki Rahmat No. 100, Surabaya"
+  },
+  {
+    "name": "PT Sentosa Mandiri",
+    "phone": "024-66554433",
+    "email": "sales@sentosamandiri.co.id",
+    "address": "Jl. Pandanaran No. 18, Semarang"
+  }
+]
