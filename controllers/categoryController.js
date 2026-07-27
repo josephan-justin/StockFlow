@@ -1,6 +1,13 @@
+const{ Category } = require('../models')
+
 class Controller{
     static async showCategories(req, res){
         try {
+            let categories = await Category.findAll({
+                order: [['name', 'ASC']]
+            })
+
+            res.render('categories/categories', {categories})
             
         } catch (error) {
             console.log(error)
@@ -10,7 +17,7 @@ class Controller{
     
     static async getAdd(req, res){
         try {
-            
+            res.render('categories/addCategory')
         } catch (error) {
             console.log(error)
             res.send(error)
@@ -19,8 +26,17 @@ class Controller{
 
     static async postAdd(req, res){
         try {
+            const { name } = req.body
+            await Category.create({ name })
+            res.redirect('/categories')
             
         } catch (error) {
+
+            if (error.name === "SequelizeValidationError") {
+            const errors = error.errors.map(el => el.message)
+            return res.render("addCategory", { errors })
+            }
+
             console.log(error)
             res.send(error)
         }
@@ -28,7 +44,12 @@ class Controller{
 
     static async getEdit(req, res){
         try {
-            
+            const { id } = req.params
+
+            const category = await Category.findByPk(id)
+
+            res.render("categories/editCategory", { category })
+
         } catch (error) {
             console.log(error)
             res.send(error)
@@ -37,8 +58,30 @@ class Controller{
 
     static async postEdit(req, res){
         try {
+            const { id } = req.params
+            const { name } = req.body
+
+            await Category.update(
+                { name },
+                {
+                    where :{ id }
+                }
+            )
+
+            res.redirect('/categories')
             
         } catch (error) {
+            if (error.name === "SequelizeValidationError") {
+
+            const category = await Category.findByPk(req.params.id)
+            const errors = error.errors.map(el => el.message)
+
+            return res.render("editCategory", {
+                category,
+                errors
+            })
+            }
+
             console.log(error)
             res.send(error)
         }
@@ -46,7 +89,12 @@ class Controller{
 
     static async delete(req, res){
         try {
-            
+            const { id } = req.params
+            await Category.destroy({
+                where:{ id }
+            })
+
+            res.redirect('/categories')
         } catch (error) {
             console.log(error)
             res.send(error)
