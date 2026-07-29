@@ -4,11 +4,11 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Transaction extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+    
+    get formattedDate() {
+      return new Date(this.date).toLocaleDateString("id-ID")
+    }
+
     static associate(models) {
       Transaction.belongsTo(models.User)
       Transaction.hasMany(models.TransactionDetail)
