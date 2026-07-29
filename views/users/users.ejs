@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include("../partials/_head") %>
+</head>
+<body>
+    
+    <%- include("../partials/_navbar") %>
+
+    <div class="container mt-4">
+
+        <h2 class="mb-4">User Management</h2>
+
+        <% if (success && success.length) { %>
+            <div class="alert alert-success">
+                <%= success[0] %>
+            </div>
+        <% } %>
+
+        <% if (error && error.length) { %>
+            <div class="alert alert-danger">
+                <%= error[0] %>
+            </div>
+        <% } %>
+
+        <form action="/users" method="GET" class="row g-2 mb-4">
+            <div class="col-md-10">
+                <input
+                    type="text"
+                    name="search"
+                    class="form-control"
+                    placeholder="Search by name or email..."
+                    value="<%= search || '' %>">
+            </div>
+
+            <div class="col-md-2">
+                <button class="btn btn-primary w-100">
+                    Search
+                </button>
+            </div>
+        </form>
+
+        <table class="table table-bordered table-hover align-middle">
+
+            <thead class="table-dark">
+                <tr>
+                    <th>No</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <% if (users.length) { %>
+
+                    <% users.forEach((user, index) => { %>
+
+                        <tr>
+
+                            <td><%= index + 1 %></td>
+
+                            <td><%= user.name %></td>
+
+                            <td><%= user.email %></td>
+
+                            <td>
+
+                                <% if(user.role === "admin"){ %>
+
+                                    <span class="badge bg-danger">
+                                        Admin
+                                    </span>
+
+                                <% } else { %>
+
+                                    <span class="badge bg-primary">
+                                        Staff
+                                    </span>
+
+                                <% } %>
+
+                            </td>
+
+                            <td>
+
+                                <% if(user.isActive){ %>
+
+                                    <span class="badge bg-success">
+                                        Active
+                                    </span>
+
+                                <% } else { %>
+
+                                    <span class="badge bg-secondary">
+                                        Inactive
+                                    </span>
+
+                                <% } %>
+
+                            </td>
+
+                            <td>
+
+                                <% if(user.id === session.userId){ %>
+
+                                    <span class="badge bg-dark">
+                                        Current User
+                                    </span>
+
+                                <% } else { %>
+
+                                    <a
+                                        href="/users/<%= user.id %>/toggle"
+                                        class="btn btn-sm <%= user.isActive ? 'btn-danger' : 'btn-success' %>">
+
+                                        <%= user.isActive ? "Deactivate" : "Activate" %>
+
+                                    </a>
+
+                                <% } %>
+
+                            </td>
+
+                        </tr>
+
+                    <% }) %>
+
+                <% } else { %>
+
+                    <tr>
+                        <td colspan="6" class="text-center">
+                            No users found.
+                        </td>
+                    </tr>
+
+                <% } %>
+
+            </tbody>
+
+        </table>
+
+    </div>
+</body>
+</html>
