@@ -1,18 +1,60 @@
 const { Transaction, TransactionDetail, Product, sequelize } = require("../models")
+const { Op } = require('sequelize')
 
 class Controller{
-    static async showTransactions(req, res){
+    static async showTransactions(req, res) {
         try {
-            const transaction = Transaction.findAll({
-                indclude: [
-                    {
-                        model: User
-                    }
-                ],
-                order: [['date', 'ASC']]
-            })
 
-            res.render('transactions/transactions')
+            const { search, from, to } = req.query
+
+            const option = {
+                include: [User],
+                order: [["date", "DESC"]]
+            }
+
+            let where = {}
+
+            // Search Type
+            if (search) {
+                where.type = {
+                    [Op.iLike]: `%${search}%`
+                }
+            }
+
+            // Filter tanggal
+            if (from && to) {
+                where.date = {
+                    [Op.between]: [from, to]
+                }
+            } else if (from) {
+                where.date = {
+                    [Op.gte]: from
+                }
+            } else if (to) {
+                where.date = {
+                    [Op.lte]: to
+                }
+            }
+
+            if (Object.keys(where).length) {
+                option.where = where
+            }
+
+            const transactions = await Transaction.findAll(option)
+
+            const filteredTransactions = search
+                ? transactions.filter(transaction =>
+                    transaction.type.toLowerCase().includes(search.toLowerCase()) ||
+                    transaction.User.name.toLowerCase().includes(search.toLowerCase())
+                )
+                : transactions
+
+            res.render("transactions/transactions", {
+                transactions: filteredTransactions,
+                search,
+                from,
+                to
+            })
 
         } catch (error) {
             console.log(error)

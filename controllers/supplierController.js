@@ -3,11 +3,23 @@ const{ Supplier } = require('../models')
 class Controller{
     static async showSuppliers(req, res){
         try {
-            let suppliers = await Supplier.findAll({
-                order: [['name', 'ASC']]
-            })
+            const { search } = req.query
 
-            res.render('suppliers/showSuppliers', { suppliers })
+            const option = {
+                order: [["name","ASC"]]
+            }
+
+            if(search){
+                option.where={
+                    name:{
+                        [Op.iLike]:`%${search}%`
+                    }
+                }
+            }
+
+            const suppliers = await Supplier.findAll(option)
+
+            res.render('suppliers/showSuppliers', { suppliers, search })
             
         } catch (error) {
             console.log(error)

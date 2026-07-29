@@ -1,14 +1,27 @@
 const { Product, Category, Supplier } = require('../models')
+const { Op } = require('sequelize')
 
 class Controller{
     static async showProducts(req, res){
         try {
-            let products = await Product.findAll({
-                include: [ Category, Supplier ],
-                order: [['name', 'ASC']]
-            })
+            const { search } = req.query
 
-            res.render('products/showProducts', { products })
+            const option = {
+                include: [Category, Supplier],
+                order: [["name", "ASC"]]
+            }
+
+            if (search) {
+                option.where = {
+                    name: {
+                        [Op.iLike]: `%${search}%`
+                    }
+                }
+            }
+
+            const products = await Product.findAll(option)
+
+            res.render('products/showProducts', { products, search})
 
         } catch (error) {
             console.log(error)

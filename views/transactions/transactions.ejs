@@ -5,75 +5,116 @@
 </head>
 <body>
 
-<%- include("../partials/_navbar") %>
+    <%- include("../partials/_navbar") %>
 
-<div class="container mt-5">
+    <div class="container mt-5">
 
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2>Transaction History</h2>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2>Transaction History</h2>
 
-        <div>
-            <a href="/transactions/stock-in" class="btn btn-success">
-                Stock In
-            </a>
+            <div>
+                <a href="/transactions/stock-in" class="btn btn-success">
+                    Stock In
+                </a>
 
-            <a href="/transactions/stock-out" class="btn btn-danger">
-                Stock Out
-            </a>
+                <a href="/transactions/stock-out" class="btn btn-danger">
+                    Stock Out
+                </a>
+            </div>
         </div>
-    </div>
 
-    <table class="table table-bordered table-hover">
+        <form action="/transactions" method="GET" class="row g-2 mb-3">
 
-        <thead class="table-dark">
-            <tr>
-                <th>No</th>
-                <th>Type</th>
-                <th>Date</th>
-                <th>Created By</th>
-                <th>Action</th>
-            </tr>
-        </thead>
+            <div class="col-md-5">
+                <input
+                    type="text"
+                    name="search"
+                    class="form-control"
+                    placeholder="Search type or user..."
+                    value="<%= search || '' %>">
+            </div>
 
-        <tbody>
+            <div class="col-md-2">
+                <input
+                    type="date"
+                    name="from"
+                    class="form-control"
+                    value="<%= from || '' %>">
+            </div>
 
-            <% transactions.forEach((transaction, index) => { %>
+            <div class="col-md-2">
+                <input
+                    type="date"
+                    name="to"
+                    class="form-control"
+                    value="<%= to || '' %>">
+            </div>
 
+            <div class="col-md-3 d-grid">
+                <button class="btn btn-primary">
+                    Search
+                </button>
+            </div>
+
+        </form>
+
+        <table class="table table-bordered table-hover">
+
+            <thead class="table-dark">
                 <tr>
-
-                    <td><%= index + 1 %></td>
-
-                    <td>
-                        <% if(transaction.type === "IN"){ %>
-                            <span class="badge bg-success">IN</span>
-                        <% } else { %>
-                            <span class="badge bg-danger">OUT</span>
-                        <% } %>
-                    </td>
-
-                    <td>
-                        <%= transaction.formattedDate%>
-                    </td>
-
-                    <td>
-                        <%= transaction.User.name %>
-                    </td>
-
-                    <td>
-                        <a href="/transactions/<%= transaction.id %>" class="btn btn-info btn-sm">
-                            Detail
-                        </a>
-                    </td>
-
+                    <th>No</th>
+                    <th>Type</th>
+                    <th>Date</th>
+                    <th>Created By</th>
+                    <th>Action</th>
                 </tr>
+            </thead>
 
-            <% }) %>
+            <tbody>
 
-        </tbody>
+                <% if (transactions.length) { %>
 
-    </table>
+                    <% transactions.forEach((transaction, index) => { %>
 
-</div>
+                        <tr>
+
+                            <td><%= index + 1 %></td>
+
+                            <td>
+                                <span class="badge <%= transaction.type === 'IN' ? 'bg-success' : 'bg-danger' %>">
+                                    <%= transaction.type %>
+                                </span>
+                            </td>
+
+                            <td><%= transaction.formatDate %></td>
+
+                            <td><%= transaction.User.name %></td>
+
+                            <td>
+                                <a href="/transactions/<%= transaction.id %>" class="btn btn-info btn-sm">
+                                    Detail
+                                </a>
+                            </td>
+
+                        </tr>
+
+                    <% }) %>
+
+                <% } else { %>
+
+                    <tr>
+                        <td colspan="5" class="text-center">
+                            No transactions found.
+                        </td>
+                    </tr>
+
+                <% } %>
+
+            </tbody>
+
+        </table>
+
+    </div>
 
 </body>
 </html>

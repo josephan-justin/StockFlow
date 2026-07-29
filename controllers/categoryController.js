@@ -3,11 +3,23 @@ const{ Category } = require('../models')
 class Controller{
     static async showCategories(req, res){
         try {
-            let categories = await Category.findAll({
-                order: [['name', 'ASC']]
-            })
+            const { search } = req.query
 
-            res.render('categories/categories', {categories})
+            const option = {
+                order: [["name", "ASC"]]
+            }
+
+            if (search) {
+                option.where = {
+                    name: {
+                        [Op.iLike]: `%${search}%`
+                    }
+                }
+            }
+
+            const categories = await Category.findAll(option)
+
+            res.render('categories/categories', {categories, search})
             
         } catch (error) {
             console.log(error)

@@ -17,6 +17,25 @@
             </a>
         </div>
 
+        <form action="/products" method="GET" class="row mb-3">
+
+            <div class="col-md-10">
+                <input
+                    type="text"
+                    name="search"
+                    class="form-control"
+                    placeholder="Search product..."
+                    value="<%= search || '' %>">
+            </div>
+
+            <div class="col-md-2">
+                <button class="btn btn-primary w-100">
+                    Search
+                </button>
+            </div>
+
+        </form>
+
         <table class="table table-bordered table-hover align-middle">
 
             <thead class="table-dark">
@@ -35,70 +54,74 @@
 
             <tbody>
 
-                <% products.forEach((product, index) => { %>
+                <% if (products.length) { %>
+
+                    <% products.forEach((product, index) => { %>
+
+                        <tr>
+
+                            <td><%= index + 1 %></td>
+
+                            <td>
+                                <img
+                                    src="<%= product.imageUrl %>"
+                                    width="80"
+                                    height="80"
+                                    style="object-fit:cover;"
+                                    class="rounded">
+                            </td>
+
+                            <td><%= product.name %></td>
+
+                            <td><%= product.Category.name %></td>
+
+                            <td><%= product.Supplier.name %></td>
+
+                            <td>Rp <%= Number(product.price).toLocaleString("id-ID") %></td>
+
+                            <td><%= product.stock %></td>
+
+                            <td>
+                                <% if (product.stock === 0) { %>
+                                    <span class="badge bg-dark">Out of Stock</span>
+                                <% } else if (product.stock <= 5) { %>
+                                    <span class="badge bg-danger">Low Stock</span>
+                                <% } else { %>
+                                    <span class="badge bg-success">Normal</span>
+                                <% } %>
+                            </td>
+
+                            <td>
+
+                                <a href="/products/<%= product.id %>" class="btn btn-info btn-sm">
+                                    Detail
+                                </a>
+
+                                <a href="/products/<%= product.id %>/edit" class="btn btn-warning btn-sm">
+                                    Edit
+                                </a>
+
+                                <a href="/products/<%= product.id %>/delete"
+                                    class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Delete this product?')">
+                                    Delete
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                    <% }) %>
+
+                <% } else { %>
 
                     <tr>
-
-                        <td><%= index + 1 %></td>
-
-                        <td>
-                            <img
-                                src="<%= product.imageUrl %>"
-                                width="80"
-                                height="80"
-                                style="object-fit:cover;"
-                                class="rounded">
+                        <td colspan="9" class="text-center">
+                            No products found.
                         </td>
-
-                        <td><%= product.name %></td>
-
-                        <td><%= product.Category.name %></td>
-
-                        <td><%= product.Supplier.name %></td>
-
-                        <td>Rp <%= Number(product.price).toLocaleString("id-ID") %></td>
-
-                        <td><%= product.stock %></td>
-
-                        <td>
-                            <% if (product.stock === 0) { %>
-                                <span class="badge bg-dark">
-                                    Out of Stock
-                                </span>
-                            <% } else if (product.stock <= 5) { %>
-                                <span class="badge bg-danger">
-                                    Low Stock
-                                </span>
-                            <% } else { %>
-                                <span class="badge bg-success">
-                                    Normal
-                                </span>
-                            <% } %>
-                        </td>
-
-                        <td>
-
-                            <a href="/products/<%= product.id %>"
-                            class="btn btn-info btn-sm">
-                                Detail
-                            </a>
-
-                            <a href="/products/<%= product.id %>/edit"
-                            class="btn btn-warning btn-sm">
-                                Edit
-                            </a>
-
-                            <a href="/products/<%= product.id %>/delete"
-                            class="btn btn-danger btn-sm"
-                            onclick="return confirm('Delete this product?')">
-                                Delete
-                            </a>
-
-                        </td>
-
                     </tr>
 
-                <% }) %>
+                <% } %>
 
             </tbody>
 
