@@ -9,12 +9,21 @@ class Controller{
             const totalSuppliers = await Supplier.count()
             const totalTransactions = await Transaction.count()
 
+            const lowStock = await Product.count({
+                where: {
+                    stock: {
+                        [Op.lte]: 5
+                    }
+                }
+            })
+
             res.render('dashboard', {
                 user, 
                 totalCategories, 
                 totalProducts, 
                 totalSuppliers, 
-                totalTransactions
+                totalTransactions,
+                lowStock
             })
         } catch (error) {
             console.log(error)
