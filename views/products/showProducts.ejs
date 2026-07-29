@@ -28,6 +28,7 @@
                     <th>Supplier</th>
                     <th>Unit Price</th>
                     <th>Stock</th>
+                    <th>Status</th>
                     <th width="220">Action</th>
                 </tr>
             </thead>
@@ -60,20 +61,36 @@
                         <td><%= product.stock %></td>
 
                         <td>
+                            <% if (product.stock === 0) { %>
+                                <span class="badge bg-dark">
+                                    Out of Stock
+                                </span>
+                            <% } else if (product.stock <= 5) { %>
+                                <span class="badge bg-danger">
+                                    Low Stock
+                                </span>
+                            <% } else { %>
+                                <span class="badge bg-success">
+                                    Normal
+                                </span>
+                            <% } %>
+                        </td>
+
+                        <td>
 
                             <a href="/products/<%= product.id %>"
-                               class="btn btn-info btn-sm">
+                            class="btn btn-info btn-sm">
                                 Detail
                             </a>
 
                             <a href="/products/<%= product.id %>/edit"
-                               class="btn btn-warning btn-sm">
+                            class="btn btn-warning btn-sm">
                                 Edit
                             </a>
 
                             <a href="/products/<%= product.id %>/delete"
-                               class="btn btn-danger btn-sm"
-                               onclick="return confirm('Delete this product?')">
+                            class="btn btn-danger btn-sm"
+                            onclick="return confirm('Delete this product?')">
                                 Delete
                             </a>
 
