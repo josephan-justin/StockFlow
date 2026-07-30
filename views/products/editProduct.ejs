@@ -21,7 +21,7 @@
             </div>
         <% } %>
 
-        <form action="/products/<%= product.id %>/edit" method="POST">
+        <form action="/products/<%= product.id %>/edit" method="POST" enctype="multipart/form-data">
 
             <div class="mb-3">
                 <label class="form-label">Product Name</label>
@@ -96,14 +96,23 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Image URL</label>
+
+                <label class="form-label">
+                    Current Image
+                </label>
+
+                <br>
+
+                <img
+                    src="<%= product.imageUrl %>"
+                    width="150"
+                    class="rounded mb-2">
 
                 <input
-                    type="text"
-                    name="imageUrl"
+                    type="file"
+                    name="image"
                     class="form-control"
-                    value="<%= product.imageUrl %>"
-                    required>
+                    accept="image/*">
 
             </div>
 

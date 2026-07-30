@@ -1,4 +1,5 @@
 const { User, Product, Category, Supplier, Transaction } = require('../models')
+const { Op } = require('sequelize')
 
 class Controller{
     static async dashboard(req, res){

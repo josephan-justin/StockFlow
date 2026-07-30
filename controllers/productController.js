@@ -48,8 +48,14 @@ class Controller{
 
     static async postAdd(req, res){
         try {
-            const { name, price, stock, imageUrl, CategoryId, SupplierId } = req.body
-            await Category.create({ name, price, stock, imageUrl, CategoryId, SupplierId })
+            const { name, price, stock, CategoryId, SupplierId } = req.body
+
+            const imageUrl = req.file
+                ? `/uploads/${req.file.filename}`
+                : null
+
+            await Product.create({ name, price, stock, imageUrl, CategoryId, SupplierId })
+
             res.redirect('/products')
 
         } catch (error) {
@@ -117,7 +123,15 @@ class Controller{
 
     static async postEdit(req, res){
         try {
-            const { name, price, stock, imageUrl, CategoryId, SupplierId } = req.body
+            const { id } = req.params
+
+            const { name, price, stock, CategoryId, SupplierId } = req.body
+
+            const product = await Product.findByPk(id)
+
+            const imageUrl = req.file
+            ? `/uploads/${req.file.filename}`
+            : product.imageUrl
 
             await Category.update({ name, price, stock, imageUrl, CategoryId, SupplierId },
                 {
