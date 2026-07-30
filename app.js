@@ -1,3 +1,4 @@
+require("dotenv").config()
 const express = require('express')
 const session = require('express-session')
 const flash = require('connect-flash')
@@ -13,7 +14,7 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(session({
-  secret: 'stockFLow-secret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false
 }))

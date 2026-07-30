@@ -127,6 +127,41 @@
 
         </table>
 
+        <nav class="mt-3">
+            <ul class="pagination justify-content-center">
+
+                <% if (currentPage > 1) { %>
+                    <li class="page-item">
+                        <a class="page-link"
+                        href="/products?page=<%= currentPage - 1 %><%= search ? '&search=' + search : '' %>">
+                            Previous
+                        </a>
+                    </li>
+                <% } %>
+
+                <% for (let i = 1; i <= totalPages; i++) { %>
+
+                    <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                        <a class="page-link"
+                        href="/products?page=<%= i %><%= search ? '&search=' + search : '' %>">
+                            <%= i %>
+                        </a>
+                    </li>
+
+                <% } %>
+
+                <% if (currentPage < totalPages) { %>
+                    <li class="page-item">
+                        <a class="page-link"
+                        href="/products?page=<%= currentPage + 1 %><%= search ? '&search=' + search : '' %>">
+                            Next
+                        </a>
+                    </li>
+                <% } %>
+
+            </ul>
+        </nav>
+
     </div>
 
 </body>

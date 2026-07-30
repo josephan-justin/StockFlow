@@ -1,10 +1,15 @@
 const { Product, Category, Supplier } = require('../models')
 const { Op } = require('sequelize')
+const fs = require("fs")
+const path = require("path")
 
 class Controller{
     static async showProducts(req, res){
         try {
             const { search } = req.query
+            const limit = 10
+            const page = Number(req.query.page) || 1
+            const offset = (page - 1) * limit
 
             const option = {
                 include: [Category, Supplier],
@@ -19,9 +24,15 @@ class Controller{
                 }
             }
 
-            const products = await Product.findAll(option)
+            const { count, rows } = await Product.findAndCountAll(option)
+            const totalPages = Math.ceil(count / limit)
 
-            res.render('products/showProducts', { products, search})
+            res.render('products/showProducts', { 
+                products: rows,
+                search,
+                currentPage: page,
+                totalPages
+            })
 
         } catch (error) {
             console.log(error)
@@ -129,6 +140,20 @@ class Controller{
 
             const product = await Product.findByPk(id)
 
+            if (req.file && product.imageUrl) {
+
+            const oldImage = path.join(
+                    __dirname,
+                    "../public",
+                    product.imageUrl
+                )
+
+                if (fs.existsSync(oldImage)) {
+                    fs.unlinkSync(oldImage)
+                }
+
+            }
+
             const imageUrl = req.file
             ? `/uploads/${req.file.filename}`
             : product.imageUrl
@@ -172,13 +197,30 @@ class Controller{
 
     static async delete(req, res){
         try {
-             const { id } = req.params
+            const { id } = req.params
+            const product = await Product.findByPk(id)
+
+                if (product.imageUrl) {
+
+                    const imagePath = path.join(
+                        __dirname,
+                        "../public",
+                        product.imageUrl
+                    )
+
+                    if (fs.existsSync(imagePath)) {
+                        fs.unlinkSync(imagePath)
+                    }
+            }
 
             await Product.destroy({
-                where: { id }
+                where: {
+                    id
+                }
             })
 
             res.redirect("/products")
+
         } catch (error) {
             console.log(error)
             res.send(error)
